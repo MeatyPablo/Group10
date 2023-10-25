@@ -1,18 +1,23 @@
-
-
 import RPi.GPIO as GPIO
 
-pinKey = 12
+pinKey = 4
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(pinKey, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+GPIO.setup(pinKey, GPIO.IN)
+
+lastPrint = 0
 
 while True:
 
     stuff = GPIO.input(pinKey)
 
     if stuff == 0:
-        print("Key Touching")
+        if lastPrint != stuff:
+            print(stuff)
+        lastPrint = 0
     else:
-        print("key not touching")
+        if lastPrint != stuff:
+            print(stuff)
+        lastPrint = 1
 
     
